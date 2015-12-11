@@ -10,7 +10,7 @@
 # -- --------------------------------------------------------------------------------- #
 
 ggYT4V4P <- function(DatosYT4V4Pxts, FechasYT4V4P, ColorSerie, ColorTrim,
-                     TextSize, LineSize, PointSize)
+                     TextSize, LineSize, PointSize, VertSize)
 {
   DatosYT4V4P <<- DatosYT4V4Pxts
   DatosYT4V4P[,1] <<- as.POSIXct.Date(DatosYT4V4P[,1])
@@ -47,31 +47,31 @@ ggYT4V4P <- function(DatosYT4V4Pxts, FechasYT4V4P, ColorSerie, ColorTrim,
   YT4V4P <- YT4V4P1 +  
   geom_segment(x = as.numeric(FechasYT4V4P[1]), xend = as.numeric(FechasYT4V4P[1]),
   y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[1])),2],
-  linetype= 5, size=.4, colour=ColorTrim) +
+  linetype= 5, size=VertSize, colour=ColorTrim) +
     
   geom_segment(x = as.numeric(FechasYT4V4P[2]), xend = as.numeric(FechasYT4V4P[2]),
   y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[2])),2],
-  linetype= 5, size=.4, colour=ColorTrim) +
+  linetype= 5, size=VertSize, colour=ColorTrim) +
     
   geom_segment(x = as.numeric(FechasYT4V4P[3]), xend = as.numeric(FechasYT4V4P[3]),
   y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[3])),2],
-  linetype= 5, size=.4, colour=ColorTrim) +
+  linetype= 5, size=VertSize, colour=ColorTrim) +
   
   geom_segment(x = as.numeric(FechasYT4V4P[4]), xend = as.numeric(FechasYT4V4P[4]),
   y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[4])),2],
-  linetype= 5, size=.4, colour=ColorTrim) +
+  linetype= 5, size=VertSize, colour=ColorTrim) +
     
   geom_segment(x = as.numeric(FechasYT4V4P[5]), xend = as.numeric(FechasYT4V4P[5]),
   y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[5])),2],
-  linetype= 5, size=.4, colour=ColorTrim) +
+  linetype= 5, size=VertSize, colour=ColorTrim) +
   
   geom_segment(x = as.numeric(FechasYT4V4P[6]), xend = as.numeric(FechasYT4V4P[6]),
   y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[6])),2],
-  linetype= 5, size=.4, colour=ColorTrim) +
+  linetype= 5, size=VertSize, colour=ColorTrim) +
     
   geom_segment(x = as.numeric(FechasYT4V4P[7]), xend = as.numeric(FechasYT4V4P[7]),
   y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[7])),2],
-  linetype= 5, size=.4, colour=ColorTrim) +
+  linetype= 5, size=VertSize, colour=ColorTrim) +
 
     geom_point(aes(x = DatosYT4V4P[Numeros[1],1], y=DatosYT4V4P[Numeros[1],2] ),
                size=PointSize, colour="red")    + 
@@ -88,19 +88,19 @@ ggYT4V4P <- function(DatosYT4V4Pxts, FechasYT4V4P, ColorSerie, ColorTrim,
     geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
                size=PointSize, colour="red")    +
     geom_point(aes(x = DatosYT4V4P[Numeros[1],1], y=DatosYT4V4P[Numeros[1],2] ),
-               size=PointSize-3, colour="white")  + 
+               size=(PointSize-4), colour="white")  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[2],1], y=DatosYT4V4P[Numeros[2],2] ),
-               size=PointSize-3, colour="white")  +  
+               size=(PointSize-4), colour="white")  +  
     geom_point(aes(x = DatosYT4V4P[Numeros[3],1], y=DatosYT4V4P[Numeros[3],2] ),
-               size=PointSize-3, colour="white")  + 
+               size=(PointSize-4), colour="white")  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[4],1], y=DatosYT4V4P[Numeros[4],2] ),
-               size=PointSize-3, colour="white")  +
+               size=(PointSize-4), colour="white")  +
     geom_point(aes(x = DatosYT4V4P[Numeros[5],1], y=DatosYT4V4P[Numeros[5],2] ),
-               size=PointSize-3, colour="white")  + 
+               size=(PointSize-4), colour="white")  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[6],1], y=DatosYT4V4P[Numeros[6],2] ),
-               size=PointSize-3, colour="white")  +
+               size=(PointSize-4), colour="white")  +
     geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
-               size=PointSize-3, colour="white")
+               size=(PointSize-4), colour="white")
 return(YT4V4P)
 }
 
