@@ -1,12 +1,111 @@
-# -- -------------------------------------------------------------------------------------------- #
-# -- Initial Developer: FranciscoME ------------------------------------------------------------- #
-# -- GitHub Repossitory: https://github.com/IFFranciscoME/DataVisualization --------------------- #
-# -- License: GNU General Public License -------------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- Forecast Single TimeSeries with Standard errors -------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- Initial Developer: FranciscoME -------------------------------------------------- #
+# -- GitHub Repossitory: https://github.com/IFFranciscoME/DataVisualization ---------- #
+# -- License: GNU General Public License --------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+
+# -- --------------------------------------------------------------------------------- #
+# -- Yearly TimeSeries + 4 Vertical Lines + 4 Dots ----------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+
+ggYT4V4P <- function(DatosYT4V4Pxts, FechasYT4V4P, ColorSerie, ColorTrim)
+{
+  DatosYT4V4P <<- DatosYT4V4Pxts
+  DatosYT4V4P[,1] <<- as.POSIXct.Date(DatosYT4V4P[,1])
+  YT4V4P1 <- ggplot(DatosYT4V4P,  aes(DatosYT4V4P[,1])) + 
+    geom_line(aes(y = DatosYT4V4P[,2]), colour = ColorSerie, size = .8)       +
+      labs(title = NULL, x = NULL, y = NULL)                                     + 
+      theme(panel.background = element_rect(fill="white"),
+      panel.grid.minor.y = element_line(size = .25, color = "dark grey"),
+      panel.grid.major.y = element_line(size = .25, color = "dark grey"),
+      panel.grid.major.x = NULL,
+      panel.grid.major.x = element_line(size = .75, color = "black"),
+      axis.text.x =element_text(colour = "black",size = 10, hjust =.5,vjust = 0),
+      axis.text.y =element_text(colour = "black",size = 10, hjust =.5,vjust = 0),
+      axis.title.x=element_text(colour = "black",size = 12, hjust =.5,vjust = 0),
+      axis.title.y=element_text(colour = "black",size = 12, hjust =.5,vjust = 1),
+      panel.border = element_rect(linetype = 1, colour = "dark grey", fill = NA))      +
+  
+  scale_x_datetime(breaks = FechasYT4V4P,labels = date_format("%d/%m/%y"))             + 
+  
+  scale_y_continuous(breaks = round(seq(
+      round(min(DatosYT4V4Pxts[,2]),6),
+      round(max(DatosYT4V4Pxts[,2]),6),
+      (round(max(DatosYT4V4Pxts[,2]),6) - round(min(DatosYT4V4Pxts[,2]),6))/10),2),
+      labels = comma) 
+
+  Numeros <<- c(which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[1])),
+                which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[2])),
+                which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[3])),
+                which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[4])),
+                which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[5])),
+                which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[6])),
+                which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[7])))
+  
+  YT4V4P <- YT4V4P1 +  
+  geom_segment(x = as.numeric(FechasYT4V4P[1]), xend = as.numeric(FechasYT4V4P[1]),
+  y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[1])),2],
+  linetype= 5, size=.4, colour=ColorTrim) +
+    
+  geom_segment(x = as.numeric(FechasYT4V4P[2]), xend = as.numeric(FechasYT4V4P[2]),
+  y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[2])),2],
+  linetype= 5, size=.4, colour=ColorTrim) +
+    
+  geom_segment(x = as.numeric(FechasYT4V4P[3]), xend = as.numeric(FechasYT4V4P[3]),
+  y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[3])),2],
+  linetype= 5, size=.4, colour=ColorTrim) +
+  
+  geom_segment(x = as.numeric(FechasYT4V4P[4]), xend = as.numeric(FechasYT4V4P[4]),
+  y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[4])),2],
+  linetype= 5, size=.4, colour=ColorTrim) +
+    
+  geom_segment(x = as.numeric(FechasYT4V4P[5]), xend = as.numeric(FechasYT4V4P[5]),
+  y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[5])),2],
+  linetype= 5, size=.4, colour=ColorTrim) +
+  
+  geom_segment(x = as.numeric(FechasYT4V4P[6]), xend = as.numeric(FechasYT4V4P[6]),
+  y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[6])),2],
+  linetype= 5, size=.4, colour=ColorTrim) +
+    
+  geom_segment(x = as.numeric(FechasYT4V4P[7]), xend = as.numeric(FechasYT4V4P[7]),
+  y = 0, yend = DatosYT4V4Pxts[which(DatosYT4V4Pxts[,1] == as.Date(FechasYT4V4P[7])),2],
+  linetype= 5, size=.4, colour=ColorTrim) +
+
+    geom_point(aes(x = DatosYT4V4P[Numeros[1],1], y=DatosYT4V4P[Numeros[1],2] ),
+               size=5, colour="red")    + 
+    geom_point(aes(x = DatosYT4V4P[Numeros[2],1], y=DatosYT4V4P[Numeros[2],2] ),
+               size=5, colour="red")  +  
+    geom_point(aes(x = DatosYT4V4P[Numeros[3],1], y=DatosYT4V4P[Numeros[3],2] ),
+               size=5, colour="red")    + 
+    geom_point(aes(x = DatosYT4V4P[Numeros[4],1], y=DatosYT4V4P[Numeros[4],2] ),
+               size=5, colour="red")  +
+    geom_point(aes(x = DatosYT4V4P[Numeros[5],1], y=DatosYT4V4P[Numeros[5],2] ),
+               size=5, colour="red")    + 
+    geom_point(aes(x = DatosYT4V4P[Numeros[6],1], y=DatosYT4V4P[Numeros[6],2] ),
+               size=5, colour="red")  +
+    geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
+               size=5, colour="red") +
+    geom_point(aes(x = DatosYT4V4P[Numeros[1],1], y=DatosYT4V4P[Numeros[1],2] ),
+               size=3, colour="white")    + 
+    geom_point(aes(x = DatosYT4V4P[Numeros[2],1], y=DatosYT4V4P[Numeros[2],2] ),
+               size=3, colour="white")  +  
+    geom_point(aes(x = DatosYT4V4P[Numeros[3],1], y=DatosYT4V4P[Numeros[3],2] ),
+               size=3, colour="white")    + 
+    geom_point(aes(x = DatosYT4V4P[Numeros[4],1], y=DatosYT4V4P[Numeros[4],2] ),
+               size=3, colour="white")  +
+    geom_point(aes(x = DatosYT4V4P[Numeros[5],1], y=DatosYT4V4P[Numeros[5],2] ),
+               size=3, colour="white")    + 
+    geom_point(aes(x = DatosYT4V4P[Numeros[6],1], y=DatosYT4V4P[Numeros[6],2] ),
+               size=3, colour="white")  +
+    geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
+               size=3, colour="white")
+return(YT4V4P)
+}
+
+# -- --------------------------------------------------------------------------------- #
+# -- Forecast Single TimeSeries with Standard errors --------------------------------- #
+# -- --------------------------------------------------------------------------------- #
 
 ggForecastSerie  <- function(activoP, titulo)
 {
@@ -40,9 +139,9 @@ ggForecastSerie  <- function(activoP, titulo)
 return(ggForec2)
 }
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- FAC and FACP Correlogram ------------------------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- FAC and FACP Correlogram -------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
 
 ggACF <- function(x,LagMax, Type, Yaxis, Xaxis)
 {
@@ -73,9 +172,9 @@ ggACF <- function(x,LagMax, Type, Yaxis, Xaxis)
 return(fac_gg)
 }
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- Single TimeSeries Plot --------------------------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- Single TimeSeries Plot ---------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
 
 ggSerie  <- function(activo, titulo, TimeBreak,LSize,TSize)
 {
@@ -101,9 +200,9 @@ ggSerie  <- function(activo, titulo, TimeBreak,LSize,TSize)
 return(gg_ser)
 }
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- Single TimeSeries Plot + Vertical Signals -------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- Single TimeSeries Plot + Vertical Signals --------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
 
 ggSerieM1 <- function(DataIN,Color1,Color2,ValueSerieM1,maintitle,datebreaks,signalcolor1,signalcolor2,LSize,TSize)
 {
@@ -138,9 +237,9 @@ ggSerieM1 <- function(DataIN,Color1,Color2,ValueSerieM1,maintitle,datebreaks,sig
 return(gg_ser)
 }
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- Trading Singal Time Series ----------------------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- Trading Singal Time Series ------------------------------------------------------ #
+# -- --------------------------------------------------------------------------------- #
 
 ggTradingSignal <- function(DataIN,Color1,Color2,Value,ColName,datebreaks,signalcolor1,signalcolor2,TSize)
 {
@@ -175,9 +274,9 @@ ggTradingSignal <- function(DataIN,Color1,Color2,Value,ColName,datebreaks,signal
 return(gg_ser1)
 }
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- Equity Time Series ------------------------------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- Equity Time Series -------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
 
 ggEquity <- function(DataIN,LineSize,Color1,Color2,SizeText,ValueEquity,ColName,
                      datebreaks,signalcolor1,signalcolor2)
@@ -213,9 +312,9 @@ ggEquity <- function(DataIN,LineSize,Color1,Color2,SizeText,ValueEquity,ColName,
 return(gg_ser2)
 }
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- 4 time series plot ------------------------------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- 4 time series plot -------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
 
 ggSerieM4 <- function(Assets)
 {
@@ -257,9 +356,9 @@ scale_y_continuous(breaks = seq(y_min, y_max, y_num),labels = comma)
 return(ggsm1)
 }
 
-# -- -------------------------------------------------------------------------------------------- #
-# -- OrderBook plot ----------------------------------------------------------------------------- #
-# -- -------------------------------------------------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+# -- OrderBook plot ------------------------------------------------------------------ #
+# -- --------------------------------------------------------------------------------- #
 
 ggOrderBookPlot <- function(Data, Color1, Color2)
 {
