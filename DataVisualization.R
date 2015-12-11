@@ -88,19 +88,19 @@ ggYT4V4P <- function(DatosYT4V4Pxts, FechasYT4V4P, ColorSerie, ColorTrim,
     geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
                size=PointSize, colour="red")    +
     geom_point(aes(x = DatosYT4V4P[Numeros[1],1], y=DatosYT4V4P[Numeros[1],2] ),
-               size=PointSize, colour="white")  + 
+               size=PointSize-3, colour="white")  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[2],1], y=DatosYT4V4P[Numeros[2],2] ),
-               size=PointSize, colour="white")  +  
+               size=PointSize-3, colour="white")  +  
     geom_point(aes(x = DatosYT4V4P[Numeros[3],1], y=DatosYT4V4P[Numeros[3],2] ),
-               size=PointSize, colour="white")  + 
+               size=PointSize-3, colour="white")  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[4],1], y=DatosYT4V4P[Numeros[4],2] ),
-               size=PointSize, colour="white")  +
+               size=PointSize-3, colour="white")  +
     geom_point(aes(x = DatosYT4V4P[Numeros[5],1], y=DatosYT4V4P[Numeros[5],2] ),
-               size=PointSize, colour="white")  + 
+               size=PointSize-3, colour="white")  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[6],1], y=DatosYT4V4P[Numeros[6],2] ),
-               size=PointSize, colour="white")  +
+               size=PointSize-3, colour="white")  +
     geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
-               size=PointSize, colour="white")
+               size=PointSize-3, colour="white")
 return(YT4V4P)
 }
 
