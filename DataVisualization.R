@@ -88,19 +88,19 @@ ggYT4V4P <- function(DatosYT4V4Pxts, FechasYT4V4P, ColorSerie, ColorTrim,
     geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
                size=PointSize, colour=ColorCirc1)    +
     geom_point(aes(x = DatosYT4V4P[Numeros[1],1], y=DatosYT4V4P[Numeros[1],2] ),
-               size=(PointSize-4), colour=ColorCirc2)  + 
+               size=(PointSize-9), colour=ColorCirc2)  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[2],1], y=DatosYT4V4P[Numeros[2],2] ),
-               size=(PointSize-4), colour=ColorCirc2)  +  
+               size=(PointSize-9), colour=ColorCirc2)  +  
     geom_point(aes(x = DatosYT4V4P[Numeros[3],1], y=DatosYT4V4P[Numeros[3],2] ),
-               size=(PointSize-4), colour=ColorCirc2)  + 
+               size=(PointSize-9), colour=ColorCirc2)  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[4],1], y=DatosYT4V4P[Numeros[4],2] ),
-               size=(PointSize-4), colour=ColorCirc2)  +
+               size=(PointSize-9), colour=ColorCirc2)  +
     geom_point(aes(x = DatosYT4V4P[Numeros[5],1], y=DatosYT4V4P[Numeros[5],2] ),
-               size=(PointSize-4), colour=ColorCirc2)  + 
+               size=(PointSize-9), colour=ColorCirc2)  + 
     geom_point(aes(x = DatosYT4V4P[Numeros[6],1], y=DatosYT4V4P[Numeros[6],2] ),
-               size=(PointSize-4), colour=ColorCirc2)  +
+               size=(PointSize-9), colour=ColorCirc2)  +
     geom_point(aes(x = DatosYT4V4P[Numeros[7],1], y=DatosYT4V4P[Numeros[7],2] ),
-               size=(PointSize-4), colour=ColorCirc2)
+               size=(PointSize-9), colour=ColorCirc2)
 return(YT4V4P)
 }
 
@@ -177,12 +177,13 @@ return(fac_gg)
 # -- Single TimeSeries Plot ---------------------------------------------------------- #
 # -- --------------------------------------------------------------------------------- #
 
-ggSerie  <- function(activo, titulo, TimeBreak,LSize,TSize)
+ggSerie  <- function(activo, titulo, Xlabel, Ylabel, TimeBreak, LSize, 
+                     TSize, dFormat, Rounded, ColorL)
 {
   activo <<- activo
   gg_sp  <- ggplot(activo,  aes(activo[,1], activo[,2]))
-  gg_sp1 <- gg_sp + geom_line(colour = "steel blue", size = LSize)                     + 
-  labs(title = titulo, x = "Dato", y = "Valor")
+  gg_sp1 <- gg_sp + geom_line(colour = ColorL, size = LSize)                     + 
+  labs(title = titulo, x = Xlabel, y = Ylabel)
 
   gg_ser <- gg_sp1 + theme(panel.background = element_rect(fill="white"),
   panel.grid.minor.y = element_line(size = .25, color = "dark grey"),
@@ -195,9 +196,9 @@ ggSerie  <- function(activo, titulo, TimeBreak,LSize,TSize)
   axis.title.y=element_text(colour = "black",size = TSize+2, hjust =.5,vjust = 1),
   title = element_text(colour = "black", size = TSize+4, hjust = 1, vjust = 0.8), 
   panel.border = element_rect(linetype = 1, colour = "dark grey", fill = NA))        +
-  scale_y_continuous(breaks = seq(round(min(activo[,2]),4),
-  round(max(activo[,2]),4), (round(max(activo[,2]),4)-round(min(activo[,2]),4))/10)) +  
-  scale_x_datetime(labels = date_format("%d/%m/%y %H:%M"), breaks = TimeBreak)
+  scale_y_continuous(breaks = round(seq(min(activo[,2]), max(activo[,2]), 
+                                  (max(activo[,2])-min(activo[,2]))/10),Rounded)) +  
+  scale_x_datetime(labels = date_format(dFormat), breaks = TimeBreak)
 return(gg_ser)
 }
 
