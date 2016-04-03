@@ -1,6 +1,8 @@
 # DataVisualization
 Data Visualization for Dinamic Report
 
+Para pruebas en codigos y en particular ggCorHM
+
 ```{r}
 library(reshape2)
 library(ggplot2)
