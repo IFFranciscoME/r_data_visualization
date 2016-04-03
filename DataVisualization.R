@@ -387,3 +387,59 @@ legend.key   = element_rect(colour = "white", fill = "white", size = 0.5),
 legend.title = element_blank())
 return(OBPlot)
 }
+
+# -- --------------------------------------------------------------------------------- #
+# -- Matriz de correlaciones tipo HeatMap -------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+
+ggCorHM <- function(Data, Nombres, OrdType, ColorLow, ColorHigh, ColorMid, TamTxtCor,
+                    RndTxtCor, ColTxtCor)  {
+
+  # Data:    xts          # Datos de entrada
+  # Nombres: character    # Nombres de activos
+  # OrdType: numeric      # "Ordenado" para hierarcical clustering
+  # ColorLow:  character  # Color de valores cercanos a -1
+  # ColorHigh: character  # Color de valores cercanos a 1
+  # ColorMid:  character  # Color de valores cercanos a 0
+  # TamTxtCor: numeric    # Tamano del valor de correlacion
+  # RndTxtCor: numeric    # Decimales en redondeo de valor de correlacion
+  # ColTxtCor: character  # Color de texto de valor de correlacion
+  
+  colnames(Data) <- Nombres
+  cormat <- round(cor(Data),RndTxtCor)
+  melted_cormat  <- melt(cormat)
+  
+  get_upper_tri <- function(cormat) {
+    cormat[lower.tri(cormat)] <- NA
+    return(cormat)
+  }
+  
+  if(OrdType == "Ordenado") {
+  reorder_cormat <- function(cormat)  {
+    dd <- as.dist((1-cormat)/2)
+    hc <- hclust(dd)
+    cormat <-cormat[hc$order, hc$order]
+  } } else reorder_cormat <- function(cormat) { cormat <- cormat }
+  
+  cormat <- reorder_cormat(cormat)
+  upper_tri <- get_upper_tri(cormat)
+  melted_cormat <- melt(upper_tri, na.rm = TRUE)
+  
+  ggCorHM <- ggplot(melted_cormat, aes(Var2, Var1, fill = value)) + 
+    geom_tile(color = "white") + coord_fixed()  +
+    scale_fill_gradient2(low = ColorLow, high = ColorHigh, mid = ColorMid,
+                         midpoint = 0, limit = c(-1,1), space = "Lab")   +
+    geom_text(aes(Var2, Var1, label = value), color = ColTxtCor, size = TamTxtCor) +
+    theme(legend.position="none",panel.background = element_rect(fill="white"),
+          axis.text.x = element_text(angle = 45, vjust = 1, size = 10, hjust = 1),
+          axis.text.y = element_text(angle = 0,  vjust = 0, size = 10, hjust =.5),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor.y=element_line(size=.35, color="red", linetype="dashed"),
+          panel.grid.major.y=element_line(size=.35, color="black", linetype="dashed"),
+          panel.grid.major.x=element_line(size=.05, color="white", linetype="solid"),
+          panel.grid.minor.x=element_line(size=.05, color="white", linetype="solid"),
+          axis.ticks = element_blank())
+return(ggCorHM)
+}
+
