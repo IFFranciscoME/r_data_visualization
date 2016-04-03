@@ -395,6 +395,7 @@ return(OBPlot)
 ggCorHM <- function(Data, Nombres, OrdType, ColorLow, ColorHigh, ColorMid, TamTxtCor,
                     RndTxtCor, ColTxtCor)  {
 
+  # Librerias necesarias: reshape2, ggplot2
   # Data:    xts          # Datos de entrada
   # Nombres: character    # Nombres de activos
   # OrdType: numeric      # "Ordenado" para hierarcical clustering
@@ -442,4 +443,3 @@ ggCorHM <- function(Data, Nombres, OrdType, ColorLow, ColorHigh, ColorMid, TamTx
           axis.ticks = element_blank())
 return(ggCorHM)
 }
-
