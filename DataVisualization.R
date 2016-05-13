@@ -198,7 +198,7 @@ ggSerie  <- function(activo, titulo, Xlabel, Ylabel, TimeBreak, LSize,
   panel.border = element_rect(linetype = 1, colour = "dark grey", fill = NA))        +
   scale_y_continuous(breaks = round(seq(min(activo[,2]), max(activo[,2]), 
                                   (max(activo[,2])-min(activo[,2]))/10),Rounded)) +  
-  scale_x_datetime(labels = date_format(dFormat), breaks = TimeBreak)
+  scale_x_datetime(breaks = date_breaks(TimeBreak), date_labels = "%d/%m/%y %H:%M")
 return(gg_ser)
 }
 
@@ -234,10 +234,8 @@ ggSerieM1 <- function(DataIN,Color1,Color2,ValueSerieM1,maintitle,datebreaks,sig
   (round(max(DataSerieM1[,ValueSerieM1]),6) -  round(min(DataSerieM1[,ValueSerieM1]),6))/10
   ),2),labels = comma)
   
-  DataSerieM1$TimeStamp <- as.Date(DataSerieM1$TimeStamp)
-  
   gg_ser1 <- gg_ser +
-  scale_x_date(date_breaks = "1 months", date_labels = "%d/%m/%y %H:%M")             +
+  scale_x_datetime(breaks = date_breaks(datebreaks), date_labels = "%d/%m/%y %H:%M")             +
   geom_vline(xintercept=VisualSell, linetype = 5,size=.5,colour=signalcolor1,alpha = 0.8)  +
   geom_vline(xintercept=VisualBuy, linetype = 5,size=.5,colour=signalcolor2,alpha = 0.8)
 return(gg_ser1)
@@ -273,11 +271,13 @@ ggTradingSignal <- function(DataIN,Color1,Color2,Value,ColName,datebreaks,signal
   title = element_text(colour = Color1, size = TSize+4, hjust = 1, vjust = 0.8), 
   panel.border = element_rect(linetype = 1, colour = Color2, fill = NA))                  +
   labs(title = paste(ColName," Indicator ValueTrading"), x = NULL, y = NULL)              +
-  scale_y_continuous(breaks = round(seq(yminTrading,ymaxTrading,ynumTrading),2),labels = comma)  +
-  scale_x_datetime(breaks = datebreaks,labels = date_format("%d/%m/%y %H:%M"))            +
+  scale_y_continuous(breaks = round(seq(yminTrading,ymaxTrading,ynumTrading),2),labels = comma) 
+  
+  gg_ser2 <- gg_ser1 +
+  scale_x_datetime(breaks = date_breaks(datebreaks), date_labels = "%d/%m/%y %H:%M")    +
   geom_hline(yintercept=SellSignal, linetype = 5,size=.75,colour=signalcolor1,alpha = 1)  +
   geom_hline(yintercept=BuySignal, linetype = 5,size =.75,colour=signalcolor2,alpha = 1)
-return(gg_ser1)
+return(gg_ser2)
 }
 
 # -- --------------------------------------------------------------------------------- #
