@@ -232,11 +232,15 @@ ggSerieM1 <- function(DataIN,Color1,Color2,ValueSerieM1,maintitle,datebreaks,sig
   round(min(DataSerieM1[,ValueSerieM1]),6),
   round(max(DataSerieM1[,ValueSerieM1]),6),
   (round(max(DataSerieM1[,ValueSerieM1]),6) -  round(min(DataSerieM1[,ValueSerieM1]),6))/10
-  ),2),labels = comma)  +
-  scale_x_datetime(breaks = datebreaks,labels = date_format("%d/%m/%y %H:%M"))             +
+  ),2),labels = comma)
+  
+  DataSerieM1$TimeStamp <- as.Date(DataSerieM1$TimeStamp)
+  
+  gg_ser1 <- gg_ser +
+  scale_x_date(date_breaks = "1 months", date_labels = "%d/%m/%y %H:%M")             +
   geom_vline(xintercept=VisualSell, linetype = 5,size=.5,colour=signalcolor1,alpha = 0.8)  +
   geom_vline(xintercept=VisualBuy, linetype = 5,size=.5,colour=signalcolor2,alpha = 0.8)
-return(gg_ser)
+return(gg_ser1)
 }
 
 # -- --------------------------------------------------------------------------------- #
