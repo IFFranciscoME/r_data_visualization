@@ -245,7 +245,8 @@ return(gg_ser1)
 # -- Trading Singal Time Series ------------------------------------------------------ #
 # -- --------------------------------------------------------------------------------- #
 
-ggTradingSignal <- function(DataIN,Color1,Color2,Value,ColName,datebreaks,signalcolor1,signalcolor2,TSize)
+ggTradingSignal <- function(DataIN,Color1,Color2,Value,ColName,datebreaks,signalcolor1,
+                            signalcolor2,TSize,SSize,SType)
 {
   DataTrading   <<- data.frame(DataIN)
   ValueTrading  <<- Value
@@ -275,8 +276,8 @@ ggTradingSignal <- function(DataIN,Color1,Color2,Value,ColName,datebreaks,signal
   
   gg_ser2 <- gg_ser1 +
   scale_x_datetime(breaks = date_breaks(datebreaks), date_labels = "%d/%m/%y %H:%M")    +
-  geom_hline(yintercept=SellSignal, linetype = 5,size=.75,colour=signalcolor1,alpha = 1)  +
-  geom_hline(yintercept=BuySignal, linetype = 5,size =.75,colour=signalcolor2,alpha = 1)
+  geom_hline(yintercept=SellSignal, linetype = SType,size=SSize,colour=signalcolor1,alpha = 1)  +
+  geom_hline(yintercept=BuySignal, linetype = SType,size =SSize,colour=signalcolor2,alpha = 1)
 return(gg_ser2)
 }
 
