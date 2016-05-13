@@ -178,7 +178,7 @@ return(fac_gg)
 # -- --------------------------------------------------------------------------------- #
 
 ggSerie  <- function(activo, titulo, Xlabel, Ylabel, TimeBreak, LSize, 
-                     TSize, dFormat, Rounded, ColorL)
+                     TSize, Rounded, ColorL)
 {
   activo <<- activo
   gg_sp  <- ggplot(activo,  aes(activo[,1], activo[,2]))
@@ -197,7 +197,7 @@ ggSerie  <- function(activo, titulo, Xlabel, Ylabel, TimeBreak, LSize,
   title = element_text(colour = "black", size = TSize+4, hjust = 1, vjust = 0.8), 
   panel.border = element_rect(linetype = 1, colour = "dark grey", fill = NA))        +
   scale_y_continuous(breaks = round(seq(min(activo[,2]), max(activo[,2]), 
-                                  (max(activo[,2])-min(activo[,2]))/10),Rounded)) +  
+                                  (max(activo[,2])-min(activo[,2]))/10),Rounded),labels = comma) +  
   scale_x_datetime(breaks = date_breaks(TimeBreak), date_labels = "%d/%m/%y %H:%M")
 return(gg_ser)
 }
