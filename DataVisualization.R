@@ -448,3 +448,67 @@ ggCorHM <- function(Data, Nombres, OrdType, ColorLow, ColorHigh, ColorMid, TamTx
           axis.ticks = element_blank())
 return(ggCorHM)
 }
+
+# -- --------------------------------------------------------------------------------- #
+# -- Casos Extremos ---------------------------------------------------------------- -- #
+# -- --------------------------------------------------------------------------------- #
+
+VerdeTP  <- "#30BB9B"
+AzulTP   <- "#1C3B54"
+Azul2TP  <- "#1C3B40"
+NaranTP  <- "#FF6F67"
+GrisTP   <- "#EEEEEE"
+GrisOTP  <- "#4C4C4C"
+BlancoTP <- "#FFFFF"
+
+G2 <- ggplot(Suc1M5, aes(factor(HH),OC)) + 
+  geom_boxplot(aes(fill = factor(SS))) +
+  scale_fill_manual(values = c(VerdeTP,AzulTP,Azul2TP,NaranTP,GrisTP,GrisOTP)) +
+  theme(panel.background = element_rect(fill="white"),
+        panel.grid.minor.y=element_line(size=.25,color="dark grey",linetype="solid"),
+        panel.grid.major.y=element_line(size=.25,color="dark grey",linetype="solid"),
+        panel.grid.major.x=element_line(size=.25,color="dark grey",linetype="dashed"),
+        panel.grid.minor.x=element_line(size=.25,color="dark grey",linetype="dashed"),
+        axis.text.x  = element_text(colour = "black",size = 12, hjust =.5,vjust = 0),
+        axis.text.y  = element_text(colour = "black",size = 12, hjust =.5,vjust = 0),
+        axis.title.x = element_text(colour = "black",size = 16,hjust  =.5,vjust = 0),
+        axis.title.y = element_text(colour = "black",size = 16,hjust  =.5,vjust = 1),
+        title = element_text(colour = "black", size = 16, hjust = 1, vjust = 0.8), 
+        legend.position = "right", legend.margin = unit(.25, "cm"), 
+        legend.background = element_rect(colour = "white", fill = NA),
+        legend.text  = element_text(size = 11.5), 
+        panel.border = element_rect(linetype = 1, colour = "dark grey", fill = NA),
+        legend.key   = element_rect(colour = "white", fill = "white", size = 1),
+        legend.title = element_blank()) + 
+  scale_y_continuous(breaks = round(seq(
+    min(Suc1M5$OC), max(Suc1M5$OC), (max(Suc1M5$OC) - min(Suc1M5$OC))/15),0), 
+    labels=comma) + labs(title="(G2) Amplitud de Vela (Precios en Casos Extremos 5Min)",
+                         x = "Hora del dia", y = "Open - Close (En pips)")
+
+# -- --------------------------------------------------------------------------------- #
+# -- Amplitud de Vela Max(Precios OHLC 5Min) --------------------------------------- -- #
+# -- --------------------------------------------------------------------------------- #
+
+G4 <- ggplot(OA_TotalesM5, aes(factor(HH),IndVC1)) + geom_jitter(aes(colour = SS)) +
+  theme(panel.background = element_rect(fill="white"),
+        panel.grid.minor.y=element_line(size=.25,color="dark grey",linetype="solid"),
+        panel.grid.major.y=element_line(size=.25,color="dark grey",linetype="solid"),
+        panel.grid.major.x=element_line(size=.25,color="dark grey",linetype="dashed"),
+        panel.grid.minor.x=element_line(size=.25,color="dark grey",linetype="dashed"),
+        axis.text.x  = element_text(colour = "black",size = 12, hjust =.5,vjust = 0),
+        axis.text.y  = element_text(colour = "black",size = 12, hjust =.5,vjust = 0),
+        axis.title.x = element_text(colour = "black",size = 16,hjust  =.5,vjust = 0),
+        axis.title.y = element_text(colour = "black",size = 16,hjust  =.5,vjust = 1),
+        title = element_text(colour = "black", size = 16, hjust = 1, vjust = 0.8), 
+        legend.position = "right", legend.margin = unit(.25, "cm"), 
+        legend.background = element_rect(colour = "white", fill = NA),
+        legend.text  = element_text(size = 11.5), 
+        panel.border = element_rect(linetype = 1, colour = "dark grey", fill = NA),
+        legend.key   = element_rect(colour = "white", fill = "white", size = 1),
+        legend.title = element_blank()) + 
+  scale_y_continuous(breaks = round(seq(
+    min(OA_TotalesM5$IndVC1), max(OA_TotalesM5$IndVC1),
+    (max(OA_TotalesM5$IndVC1) - min(OA_TotalesM5$IndVC1))/15),0),
+    labels=comma) +
+  labs(title="(G4) Numero de Velas Consecutivas Alcistas (Total Precios 5Min)",
+       x = "Hora del dia", y = "Numero de Velas Consecutivas")
