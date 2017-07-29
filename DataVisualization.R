@@ -6,6 +6,47 @@
 # -- --------------------------------------------------------------------------------- #
 
 # -- --------------------------------------------------------------------------------- #
+# -- OHLC CandleStick with ggplot2 --------------------------------------------------- #
+# -- --------------------------------------------------------------------------------- #
+
+draw_candles <- function(df, title_param, alpha_param = 1){
+  
+  df <- df_Datos
+  df$change <- ifelse(df$Close > df$Open, "up", ifelse(df$Close < df$Open, "down", "flat"))
+  
+  width_candidates <- c(as.numeric(difftime(df$Date[2], df$Date[1]), units = "secs"), 
+                        as.numeric(difftime(df$Date[3], df$Date[2]), units = "secs"), 
+                        as.numeric(difftime(df$Date[4], df$Date[3]), units = "secs"))
+  
+  df$width_s = min(width_candidates)
+  
+  candle_colors = c("down" = rgb(192,0,0,alpha=255,maxColorValue=255), 
+                    "up"   = rgb(0,192,0,alpha=255,maxColorValue=255), 
+                    "flat" = rgb(0,0,192,alpha=255,maxColorValue=255))
+  
+
+  g <- ggplot(df, aes(x=Date))+
+    geom_linerange(aes(ymin=Low, ymax=High, colour = change), alpha = alpha_param) +  
+    
+    theme_bw() + labs(title=title_param) +
+    geom_rect(aes(xmin = Date - width_s/2 * 0.9, xmax = Date + width_s/2 * 0.9,
+                  ymin = pmin(Open, Close), ymax = pmax(Open, Close),
+                  fill = change), alpha = alpha_param) +                            
+    
+    guides(fill = FALSE, colour = FALSE) +
+    scale_color_manual(values = candle_colors) +  # color for line
+    scale_fill_manual(values = candle_colors)     # color for candle fill  
+  
+  if (any(df$change == "flat")) 
+    g <- g + geom_segment(data = df[df$change == "flat",], aes(x = Date - width_s / 2 * 0.9,
+                                                               y = Close, yend = Close,
+                                                               xend = Date + width_s / 2 * 0.9,
+                                                               colour = change), alpha = alpha_param)
+  g
+}
+
+
+# -- --------------------------------------------------------------------------------- #
 # -- Yearly TimeSeries + 4 Vertical Lines + 4 Dots ----------------------------------- #
 # -- --------------------------------------------------------------------------------- #
 
